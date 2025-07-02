@@ -1,17 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
+
+import styles from "./Home.module.scss";
 import { AuthContextProvider } from "./_context/AuthContext";
-
-const geistSans = Geist({
-    variable: "--font-geist-sans",
-    subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-    variable: "--font-geist-mono",
-    subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
     title: "Create Next App",
@@ -25,8 +17,27 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={`${geistSans.variable} ${geistMono.variable}`}>
-                <AuthContextProvider>{children}</AuthContextProvider>
+            <body>
+                <AuthContextProvider>
+                    <header className={styles.siteHeader}>
+                        <nav className={styles.siteNav}>
+                            <Link href="/dashboard" className={styles.siteItem}>
+                                داشبورد
+                            </Link>
+                            <Link href="/auth" className={styles.siteItem}>
+                                ورود
+                            </Link>
+                            <Link href="/" className={styles.siteItem}>
+                                خانه
+                            </Link>{" "}
+                        </nav>
+                    </header>
+                    <main className={styles.siteMain}>{children}</main>
+
+                    <footer className={styles.siteFooter}>
+                        © {new Date().getFullYear()} رضا صالحی
+                    </footer>
+                </AuthContextProvider>
             </body>
         </html>
     );

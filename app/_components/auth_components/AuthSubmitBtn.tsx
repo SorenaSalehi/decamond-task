@@ -1,26 +1,28 @@
 "use client";
+import { useRouter } from "next/navigation";
 
 import { useAuthContext } from "@/app/_context/AuthContext";
 import styles from "./styles/AuthSubmitBtn.module.scss";
 
 export default function AuthSubmitBtn() {
-    const { isRandomUserLoading, setIsRandomUserLoading, setError, setUser } =
-        useAuthContext();
+    const router = useRouter();
+    const {
+        isRandomUserLoading,
+        setIsRandomUserLoading,
+        setFetchUserError,
+        setUser,
+        isValid,
+    } = useAuthContext();
 
     const getRandomUser = async () => {
-        console.log("start");
         setIsRandomUserLoading(true);
-        setError(null);
+        setFetchUserError(null);
 
         try {
-            console.log("try");
-
-            // فراخوانی API شما برای دریافت کاربر تصادفی
             const response = await fetch(
                 "https://randomuser.me/api/?results=1&nat=us"
             );
             const data = await response.json();
-            console.log(data);
 
             if (!response.ok) {
                 throw new Error(
@@ -28,10 +30,14 @@ export default function AuthSubmitBtn() {
                         "خطا در دریافت اطلاعات!! لطفا اینترنت خود را بررسی کنید و مجددا تلاش کنید."
                 );
             }
-
-            setUser(data);
+            const fetchedUser = data?.results[0];
+            setUser(fetchedUser);
+            localStorage.setItem("random_user", JSON.stringify(fetchedUser));
+            router.push("/dashboard");
         } catch (err) {
-            setError(err instanceof Error ? err.message : "🤔خطای ناشناخته");
+            setFetchUserError(
+                err instanceof Error ? err.message : "🤔خطای ناشناخته"
+            );
         } finally {
             setIsRandomUserLoading(false);
         }
@@ -39,10 +45,15 @@ export default function AuthSubmitBtn() {
 
     return (
         <button
+            type="button"
             onClick={getRandomUser}
-            disabled={isRandomUserLoading}
+            disabled={!isValid || isRandomUserLoading}
             className={`${styles.submitBtn} ${
-                isRandomUserLoading ? styles.loading : ""
+                !isValid
+                    ? styles.disabledButton
+                    : isRandomUserLoading
+                    ? styles.loading
+                    : ""
             }`}
         >
             {isRandomUserLoading ? (
