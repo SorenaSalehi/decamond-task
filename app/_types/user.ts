@@ -1,8 +1,3 @@
-export type RandomUserAPIResponse = {
-    results: RandomUser[];
-    info: APIInfo;
-};
-
 export type APIInfo = {
     seed: string;
     results: number;
@@ -65,4 +60,9 @@ export type RandomUser = {
         thumbnail: string;
     };
     nat: string;
+};
+
+export type RandomUserAPIResponse = {
+    results: RandomUser[];
+    info: APIInfo;
 };

@@ -18,19 +18,18 @@ function AuthContextProvider({ children }: { children: ReactNode }) {
 
     const [isAuth, setIsAuth] = useState<boolean>(false);
 
-    // random user btn
+    // random user btn states
     const [user, setUser] = useState<RandomUser | null>(null);
     const [isRandomUserLoading, setIsRandomUserLoading] =
         useState<boolean>(false);
     const [fetchUserError, setFetchUserError] = useState<string | null>(null);
 
-    // phone number input
+    // phone number input states
     const [phoneNumber, setPhoneNumber] = useState<string>("");
     const [phoneNumberError, setPhoneNumberError] = useState<string | null>("");
     const [isValid, setIsValid] = useState<boolean>(false);
 
-    console.log(user);
-
+    //checking user auth
     useEffect(() => {
         const storedUser = localStorage.getItem("random_user");
 
@@ -47,7 +46,6 @@ function AuthContextProvider({ children }: { children: ReactNode }) {
     }, [router]);
 
     const ctx = {
-        // random user btn
         isAuth,
         setIsAuth,
         user,
@@ -56,8 +54,6 @@ function AuthContextProvider({ children }: { children: ReactNode }) {
         setIsRandomUserLoading,
         fetchUserError,
         setFetchUserError,
-
-        // phone number input
         phoneNumber,
         setPhoneNumber,
         phoneNumberError,

@@ -1,4 +1,5 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 
 import { useAuthContext } from "@/app/_context/AuthContext";
@@ -6,6 +7,7 @@ import styles from "./styles/AuthSubmitBtn.module.scss";
 
 export default function AuthSubmitBtn() {
     const router = useRouter();
+
     const {
         isRandomUserLoading,
         setIsRandomUserLoading,
@@ -30,6 +32,7 @@ export default function AuthSubmitBtn() {
                         "خطا در دریافت اطلاعات!! لطفا اینترنت خود را بررسی کنید و مجددا تلاش کنید."
                 );
             }
+
             const fetchedUser = data?.results[0];
             setUser(fetchedUser);
             localStorage.setItem("random_user", JSON.stringify(fetchedUser));

@@ -31,18 +31,9 @@ export default function AuthForm() {
         }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (!validateIranianPhone(phoneNumber)) {
-            setPhoneNumberError("لطفا شماره تلفن معتبر وارد کنید");
-            return;
-        }
-    };
-
     return (
         <div className={styles.formContainer}>
-            <form onSubmit={handleSubmit} className={styles.form}>
+            <form className={styles.form}>
                 <div className={styles.inputGroup}>
                     <input
                         type="tel"

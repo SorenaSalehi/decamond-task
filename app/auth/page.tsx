@@ -1,5 +1,4 @@
 import styles from "./AuthForm.module.scss";
-
 import AuthForm from "../_components/auth_components/AuthForm";
 import AuthSubmitBtn from "../_components/auth_components/AuthSubmitBtn";
 
